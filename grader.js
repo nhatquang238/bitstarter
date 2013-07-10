@@ -8,7 +8,7 @@ References:
 
 +cheerio
   - https://github.com/MatthewMueller/cheerio
-  - http://encosia.com/cheerio-faster-windos-friendly-alternative-jsdom/
+  - http://encosia.com/cheerio-faster-windows-friendly-alternative-jsdom/
   - http://maxodgen.com/scraping-with-node.html
 
 +commander.js
@@ -29,25 +29,30 @@ var CHECKSFILE_DEFAULT = "checks.json";
 
 var assertFileExists = function(infile){
 	var instr = infile.toString();
+	// check if path exists
 	if(!fs.existsSync(instr)){
 		console.log("%s does not exist. Exiting.", instr);
+		// quit failure process
 		process.exit(1); // http://nodejs.org/api/process.html#process_process_exit_code
 	}
 	return instr;
 }
 
+// cheerio load the DOM - like jQuery for backend
 var cheerioHtmlFile = function(htmlfile){
 	return cheerio.load(fs.readFileSync(htmlfile));
+	// readFileSync returns content of the file passed in buffer format(default)
 };
 
 var loadChecks = function(checksfile){
+	// parse the string as JSON format
 	return JSON.parse(fs.readFileSync(checksfile));
 };
 
 var checkHtmlFile = function(htmlfile, checksfile){
 	$ = cheerioHtmlFile(htmlfile);
 	var checks = loadChecks(checksfile).sort();
-	var out ={};
+	var out = {};
 	for(var ii in checks){
 		var present = $(checks[ii]).length > 0;
 		out[checks[ii]] = present;
@@ -55,18 +60,24 @@ var checkHtmlFile = function(htmlfile, checksfile){
 	return out;
 };
 
+// clone function
 var clone = function(fn) {
 	// Workaround for commander.js issue
 	// http://stackoverflow.com/a/6772648
 	return fn.bind({});
 };
 
+// check if the script is run directly or called via another script.
+// If no, export the file to a module for other script to use
+// If yes
 if(require.main == module) {
 	program
 		.option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
 		.option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
 		.parse(process.argv);
 	var checkJson = checkHtmlFile(program.file, program.checks);
+
+	// convert JSON to string
 	var outJson = JSON.stringify(checkJson, null, 4);
 	console.log(outJson);
 } else {
