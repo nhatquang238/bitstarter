@@ -66,7 +66,7 @@ var performCheck = function(checksfile, $) {
 var checkHtmlFile = function(htmlfile, checksfile){
 	$ = cheerioHtmlFile(htmlfile);
 	// performCheck(checksfile, $);
-	console.log(performCheck(checksfile, $));
+	// console.log(performCheck(checksfile, $));
 	var checks = loadChecks(checksfile).sort();
 	var out = {};
 	for(var ii in checks){
