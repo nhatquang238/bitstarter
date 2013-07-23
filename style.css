@@ -1,0 +1,117 @@
+body {
+	font-size: 18px;
+	line-height: 1.5;
+}
+
+.container-fluid {
+	padding: 0;
+}
+
+.navbar-inner {
+	border-radius: 0;
+}
+
+.container {
+	margin: 0 3%;
+}
+
+.main, .promo1, .promo2, .faq {
+	margin: 3% 8%;
+}
+
+.head {
+	margin-top: 4em;
+}
+
+.funding {
+	color: #eee;
+	padding-top: 2.5em;
+	background: #222;
+}
+
+.money {
+	border-left: solid 1px #ccc;
+	border-right: solid 1px #ccc;
+}
+
+.statistics {
+	margin-bottom: 1em;
+	text-align: center;
+}
+
+.statistics h3, .statistics p {
+	margin: 0;
+}
+
+.preorder {
+	margin-bottom: 1em;
+	margin-top: 1em;
+	margin-left: 40%;
+}
+
+.twitter, .facebook {
+	margin-bottom: 3em;
+}
+.twitter {
+	margin-left: 33%;
+}
+
+.facebook {
+	margin-left: 3%;
+}
+
+.progress-success {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	background: #faa52d;
+}
+
+.progress-success>.bar {
+	width: 60%;
+}
+
+.main, .promo1, .promo2 {
+	margin-bottom: 2em;
+}
+
+@media screen and (max-width: 1024px) {
+	.money {
+		border: none;
+	}
+	.preorder {
+		margin-left: 35%;
+	}
+	.twitter {
+		margin-left: 28%;
+	}
+}
+
+@media screen and (max-width: 765px) {
+	body {
+		font-size: 16px;
+	}
+	.funding.span5 {
+		width: 80%;
+		padding-top: 0;
+		margin-top: 5%;
+	}
+	.money {
+		border-top: 1px solid #ccc;
+		border-bottom: 1px solid #ccc;
+	}
+	.preorder {
+		margin-left: 40%;
+	}
+	.twitter {
+		margin-left: 34%;
+	}
+	img, .faq, p.span5 {
+		width: 80% !important;
+		box-sizing: border-box;
+	}
+	.promo1 p.span5 {
+		padding-top: 5%;
+	}
+
+}

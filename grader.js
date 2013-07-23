@@ -26,7 +26,6 @@ var rest = require('restler');
 var program = require('commander');
 var cheerio = require('cheerio');
 var util = require('util');
-var rest = require('restler');
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
 
@@ -59,32 +58,17 @@ var performCheck = function(checksfile, $) {
 		var present = $(checks[ii]).length > 0;
 		out[checks[ii]] = present;
 	}
-	console.log(out);
 	return out;
 };
 
 var checkHtmlFile = function(htmlfile, checksfile){
 	$ = cheerioHtmlFile(htmlfile);
-	// performCheck(checksfile, $);
-	// console.log(performCheck(checksfile, $));
-	var checks = loadChecks(checksfile).sort();
-	var out = {};
-	for(var ii in checks){
-		var present = $(checks[ii]).length > 0;
-		out[checks[ii]] = present;
-	}
-	return out;
+	return performCheck(checksfile, $);
 };
 
 var checkUrl = function(html, checksfile){
 	$ = cheerio.load(html);
-	var checks = loadChecks(checksfile).sort();
-	var out = {};
-	for(var ii in checks){
-		var present = $(checks[ii]).length > 0;
-		out[checks[ii]] = present;
-	}
-	return out;
+	return performCheck(checksfile, $);
 }
 
 // clone function
@@ -96,7 +80,13 @@ var clone = function(fn) {
 
 var output = function(checkJson) {
 	var outJson = JSON.stringify(checkJson, null, 4);
-	console.log(outJson);
+	fs.writeFile('output.txt', outJson, function(err){
+		if(err){
+			console.log(err);
+		} else {
+			console.log('The file was saved!');
+		}
+	});
 };
 
 // check if the script is run directly or called via another script.
@@ -113,7 +103,7 @@ if(require.main == module) {
 		var url = ('%s', program.url);
 		rest.get(url).on('complete', function(result){
 			var checkJson = checkUrl(result, program.checks);
-			output(checkJson);
+			output(checkJsonuit );
 		})
 	} else {
 		var checkJson = checkHtmlFile(program.file, program.checks);
